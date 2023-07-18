@@ -1,14 +1,24 @@
 const puppeteer = require('puppeteer');
 const calcProfileScore = require('./calcs/calcProfileScore');
 
-const user = 'ehdhkwnjd 21';
+const user = 'Falione';
 
 (async () => {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({
+        headless: 'new',
+        executablePath: '/usr/bin/google-chrome',
+    });
     const page = await browser.newPage();
 
+    await page.setUserAgent(
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'
+    );
+
     await page.goto(
-        `https://www.leagueofgraphs.com/summoner/br/${user}#championsData-all`
+        `https://www.leagueofgraphs.com/summoner/br/${user}#championsData-all`,
+        {
+            waitUntil: 'domcontentloaded',
+        }
     );
 
     // Set screen size
@@ -16,34 +26,32 @@ const user = 'ehdhkwnjd 21';
 
     const searchProfileRole = '#profileRoles .content td';
 
-    const profilePlayer = await page.$(searchProfileRole);
+    const profilePlayer = await page.waitForSelector(searchProfileRole);
 
     const lane = await profilePlayer.evaluate((el) => el.innerText);
 
     console.log(lane);
     profilePlayer.click();
 
-    const searchGraphSpider = '#graphDD3';
+    // const searchGraphSpider = '#graphDD3';
     const search2GraphSpider = '#graphDD5';
 
-    await page.waitForNavigation();
+    await page.waitForNavigation({
+        waitUntil: 'domcontentloaded',
+    });
 
     const selectGraphType = '#choiceContainerLinkspiderChartgraphDD6';
     const selectGraphField = await page.waitForSelector(selectGraphType);
 
     await selectGraphField.evaluate((element) => element.click());
-    // await selectGraphField.click();
 
-    const graph = await page.waitForSelector(searchGraphSpider);
-
-    const graph2 = await page.waitForSelector(search2GraphSpider);
+    const graph = await page.waitForSelector(search2GraphSpider);
 
     const text = await graph.evaluate((element) => element.innerText);
-    const text2 = await graph2.evaluate((element) => element.innerText);
 
-    console.log(text, text2);
+    console.log('text : ', text);
 
-    const textInfos = text ? text : text2;
+    const textInfos = text;
 
     const textsplitedT = textInfos.split('\t')[0].trim();
     const textSplitedN = textsplitedT.split('\n');
@@ -72,7 +80,9 @@ const user = 'ehdhkwnjd 21';
 
     const urlVision = `${currentUrl}#visionData`;
 
-    await pageVision.goto(urlVision);
+    await pageVision.goto(urlVision, {
+        waitUntil: 'domcontentloaded',
+    });
 
     const searchVisionField = '.full-progress-bar.wgblue';
 
