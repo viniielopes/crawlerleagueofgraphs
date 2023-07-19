@@ -1,3 +1,13 @@
+export type SummonerInfos = {
+    farmLaner: number;
+    vi2: number;
+    partLane: number;
+    danoTop: number;
+    notaTop: number;
+    lane: string;
+    tier: string;
+};
+
 export type CalcProfileParams = {
     lane: string;
     Kill: number;
@@ -20,7 +30,7 @@ const calcProfileScore = ({
     vision,
     tier,
     teamfightParticipation,
-}: CalcProfileParams) => {
+}: CalcProfileParams): SummonerInfos => {
     const elo: {
         [key: string]: number;
     } = {
@@ -113,43 +123,45 @@ const calcProfileScore = ({
 
     notaTop = (farmLaner + vi2 + partLane + danoTop) / 4;
 
-    if (lane !== 'Support') {
-        console.log('Farm', farmLaner > 100 ? 100 : farmLaner.toFixed(0));
-        console.log('Ward/min', vi2 > 100 ? 100 : vi2.toFixed(0));
-        console.log('Participação', partLane > 100 ? 100 : partLane.toFixed(0));
-        console.log('Dano/Min', danoTop > 100 ? 100 : danoTop.toFixed(0));
-        console.log(
-            'Nota total',
-            notaTop > 100 ? 100 : (notaTop * weightTier).toFixed(0)
-        );
-    }
-
-    if (lane === 'Support') {
-        console.log(
-            'Participação em TF',
-            farmLaner > 100 ? 100 : farmLaner.toFixed(0)
-        );
-        console.log('Ward/min', vi2 > 100 ? 100 : vi2.toFixed(0));
-        console.log(
-            'Participação em kills',
-            partLane > 100 ? 100 : partLane.toFixed(0)
-        );
-        console.log(
-            'Kill-Assist/Min',
-            danoTop > 100 ? 100 : danoTop.toFixed(0)
-        );
-        console.log(
-            'Nota total',
-            notaTop > 100 ? 100 : (notaTop * weightTier).toFixed(0)
-        );
-    }
-
+    // if (lane !== 'Support') {
+    //     console.log('Farm', farmLaner > 100 ? 100 : farmLaner.toFixed(0));
+    //     console.log('Ward/min', vi2 > 100 ? 100 : vi2.toFixed(0));
+    //     console.log('Participação', partLane > 100 ? 100 : partLane.toFixed(0));
+    //     console.log('Dano/Min', danoTop > 100 ? 100 : danoTop.toFixed(0));
+    //     console.log(
+    //         'Nota total',
+    //         notaTop > 100 ? 100 : (notaTop * weightTier).toFixed(0)
+    //     );
+    // }
+    // if (lane === 'Support') {
+    //     console.log(
+    //         'Participação em TF',
+    //         farmLaner > 100 ? 100 : farmLaner.toFixed(0)
+    //     );
+    //     console.log('Ward/min', vi2 > 100 ? 100 : vi2.toFixed(0));
+    //     console.log(
+    //         'Participação em kills',
+    //         partLane > 100 ? 100 : partLane.toFixed(0)
+    //     );
+    //     console.log(
+    //         'Kill-Assist/Min',
+    //         danoTop > 100 ? 100 : danoTop.toFixed(0)
+    //     );
+    //     console.log(
+    //         'Nota total',
+    //         notaTop > 100 ? 100 : (notaTop * weightTier).toFixed(0)
+    //     );
+    // }
+    //
     return {
-        farmLaner: farmLaner > 100 ? 100 : farmLaner.toFixed(0),
-        vi2: vi2 > 100 ? 100 : vi2.toFixed(0),
-        partLane: partLane > 100 ? 100 : partLane.toFixed(0),
-        danoTop: danoTop > 100 ? 100 : danoTop.toFixed(0),
-        notaTop: notaTop > 100 ? 100 : (notaTop * weightTier).toFixed(0),
+        lane,
+        tier,
+        farmLaner: farmLaner > 100 ? 100 : Number(farmLaner.toFixed(0)),
+        vi2: vi2 > 100 ? 100 : Number(vi2.toFixed(0)),
+        partLane: partLane > 100 ? 100 : Number(partLane.toFixed(0)),
+        danoTop: danoTop > 100 ? 100 : Number(danoTop.toFixed(0)),
+        notaTop:
+            notaTop > 100 ? 100 : Number((notaTop * weightTier).toFixed(0)),
     };
 };
 

@@ -1,9 +1,15 @@
 import puppeteer from 'puppeteer';
-import { CalcProfileParams, calcProfileScore } from './calcs/calcProfileScore';
+import {
+    CalcProfileParams,
+    SummonerInfos,
+    calcProfileScore,
+} from './calcs/calcProfileScore';
 
-const user = 'Kami';
+// const user = 'Yoda';
 
-(async () => {
+export const scrapSummonerInfos = async (
+    user: string
+): Promise<SummonerInfos> => {
     const browser = await puppeteer.launch({
         headless: 'new',
         executablePath: '/usr/bin/google-chrome',
@@ -136,5 +142,5 @@ const user = 'Kami';
         vision: parseFloat(textVision ? textVision : '0'),
     });
 
-    calcProfileScore(valuesObject as CalcProfileParams);
-})();
+    return calcProfileScore(valuesObject as CalcProfileParams);
+};
