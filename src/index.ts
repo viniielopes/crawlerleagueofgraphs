@@ -30,6 +30,15 @@ export const scrapSummonerInfos = async (
     // Set screen size
     await page.setViewport({ width: 1080, height: 1024 });
 
+    const searchName = '.txt h2';
+
+    const playerNameField = await page.waitForSelector(searchName);
+
+    const playerName = await playerNameField?.evaluate((element) => {
+        const nameText = element.textContent;
+        return nameText?.substring(0, nameText.length - 4);
+    });
+
     const searchProfileRole = '#profileRoles .content td';
 
     const searchElo = '.leagueTier';
@@ -47,13 +56,11 @@ export const scrapSummonerInfos = async (
     console.log(lane);
     profilePlayer?.click();
 
-    const search2GraphSpider = '#graphDD5';
-
     await page.waitForNavigation({
         waitUntil: 'domcontentloaded',
     });
 
-    const selectTeamfightParticipation = '#graphDD21';
+    const selectTeamfightParticipation = '#graphDD27';
     const teamfightParticipationField = await page.waitForSelector(
         selectTeamfightParticipation
     );
@@ -78,6 +85,8 @@ export const scrapSummonerInfos = async (
         (element as HTMLElement).click()
     );
 
+    const search2GraphSpider = '#spiderChartgraphDD6';
+
     const graph = await page.waitForSelector(search2GraphSpider);
 
     const text = await graph?.evaluate(
@@ -93,6 +102,7 @@ export const scrapSummonerInfos = async (
     const textSplitedN = textSplitedT?.split('\n');
 
     const valuesObject = {
+        playerName,
         lane,
         tier,
         teamfightParticipation,
@@ -141,6 +151,8 @@ export const scrapSummonerInfos = async (
     Object.assign(valuesObject, {
         vision: parseFloat(textVision ? textVision : '0'),
     });
+
+    await browser.close();
 
     return calcProfileScore(valuesObject as CalcProfileParams);
 };

@@ -1,4 +1,5 @@
 export type SummonerInfos = {
+    playerName: string;
     farmLaner: number;
     vi2: number;
     partLane: number;
@@ -9,6 +10,7 @@ export type SummonerInfos = {
 };
 
 export type CalcProfileParams = {
+    playerName: string;
     lane: string;
     Kill: number;
     Gold: number;
@@ -21,6 +23,7 @@ export type CalcProfileParams = {
 };
 
 const calcProfileScore = ({
+    playerName,
     lane,
     Kill,
     // Gold,
@@ -38,6 +41,7 @@ const calcProfileScore = ({
         GrandMaster: 0.9,
         Master: 0.9,
         Diamond: 0.8,
+        Emerald: 0.65,
         Platinum: 0.6,
         Gold: 0.55,
         Silver: 0.45,
@@ -154,6 +158,7 @@ const calcProfileScore = ({
     // }
     //
     return {
+        playerName,
         lane,
         tier,
         farmLaner: farmLaner > 100 ? 100 : Number(farmLaner.toFixed(0)),

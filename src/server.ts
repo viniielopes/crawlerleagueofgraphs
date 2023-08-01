@@ -1,12 +1,18 @@
+require('dotenv').config();
 import express from 'express';
 import qs from 'qs';
 import { scrapSummonerInfos } from './index';
+import cors from 'cors';
 
 type GetSummonerInfoQuery = {
     search: string;
 };
 
 const app = express();
+
+const PORT = process.env.PORT;
+
+app.use(cors());
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -20,6 +26,7 @@ app.get('/', async (req, res) => {
         (query as GetSummonerInfoQuery).search
     );
     res.send(JSON.stringify(infos));
+    console.log('retornei o', infos);
 });
 
-app.listen(3000, () => console.log('rodou na 3000'));
+app.listen(PORT, () => console.log(`rodou na ${PORT}`));
