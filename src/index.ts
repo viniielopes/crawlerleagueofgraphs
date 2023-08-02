@@ -11,7 +11,7 @@ export const scrapSummonerInfos = async (
     user: string
 ): Promise<SummonerInfos> => {
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         args: [
             '--disable-gpu',
             '--disable-dev-shm-usage',
@@ -27,7 +27,7 @@ export const scrapSummonerInfos = async (
     const page = await browser.newPage();
 
     await page.setUserAgent(
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'
+        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
     );
 
     await page.goto(
