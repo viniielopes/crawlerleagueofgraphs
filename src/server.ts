@@ -29,4 +29,8 @@ app.get('/', async (req, res) => {
     console.log('retornei o', infos);
 });
 
+app.get('/teste', (_, res) => {
+    res.send('deu bom ta rodando');
+});
+
 app.listen(PORT, () => console.log(`rodou na ${PORT}`));

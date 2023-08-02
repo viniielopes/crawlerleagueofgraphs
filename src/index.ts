@@ -11,7 +11,17 @@ export const scrapSummonerInfos = async (
     user: string
 ): Promise<SummonerInfos> => {
     const browser = await puppeteer.launch({
-        headless: 'new',
+        headless: true,
+        args: [
+            '--disable-gpu',
+            '--disable-dev-shm-usage',
+            '--disable-setuid-sandbox',
+            '--no-sandbox',
+        ],
+        executablePath:
+            process.env.NODE_ENV === 'production'
+                ? process.env.PUPPETEER_EXECUTABLE_PATH
+                : puppeteer.executablePath(),
     });
     const page = await browser.newPage();
 
