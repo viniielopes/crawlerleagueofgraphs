@@ -7,7 +7,7 @@
         "start": "ts-node src/index.ts",
         "api": "ts-node src/server.ts",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build:prod": "tsc --build",
+        "build:prod": "tsc --build && chrome.bash",
         "start:prod": "node dist/server.js"
     },
     "keywords": [],
