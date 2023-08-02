@@ -7,7 +7,8 @@
         "start": "ts-node src/index.ts",
         "api": "ts-node src/server.ts",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc --build && node dist/server.js"
+        "build:prod": "tsc --build",
+        "start:prod": "node dist/server.js"
     },
     "keywords": [],
     "author": "",
