@@ -11,7 +11,7 @@ export const scrapSummonerInfos = async (
     user: string
 ): Promise<SummonerInfos> => {
     const browser = await puppeteer.launch({
-        headless: true,
+        headless: 'new',
         args: [
             '--disable-gpu',
             '--disable-dev-shm-usage',
@@ -33,6 +33,7 @@ export const scrapSummonerInfos = async (
         `https://www.leagueofgraphs.com/summoner/br/${user}#championsData-all`,
         {
             waitUntil: 'domcontentloaded',
+            timeout: 0,
         }
     );
 
