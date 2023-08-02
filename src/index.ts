@@ -17,7 +17,6 @@ export const scrapSummonerInfos = async (
             '--disable-dev-shm-usage',
             '--disable-setuid-sandbox',
             '--no-sandbox',
-            '--single-process',
             '--no-zygote',
         ],
         executablePath:
