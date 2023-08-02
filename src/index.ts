@@ -17,6 +17,7 @@ export const scrapSummonerInfos = async (
             '--disable-dev-shm-usage',
             '--disable-setuid-sandbox',
             '--no-sandbox',
+            '--remote-debugging-port=9222',
         ],
         executablePath:
             process.env.NODE_ENV === 'production'

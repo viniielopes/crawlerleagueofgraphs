@@ -4,6 +4,7 @@ USER root
 #     apt -y --allow-downgrades install /tmp/chrome.deb && \
 #     rm -rf /tmp/* /var/cache/apk/*
 
+EXPOSE 9222
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
