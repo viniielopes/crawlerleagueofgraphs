@@ -12,7 +12,6 @@ export const scrapSummonerInfos = async (
 ): Promise<SummonerInfos> => {
     const browser = await puppeteer.launch({
         headless: 'new',
-        executablePath: '/usr/bin/google-chrome',
     });
     const page = await browser.newPage();
 
