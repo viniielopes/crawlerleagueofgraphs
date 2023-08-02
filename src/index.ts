@@ -69,6 +69,7 @@ export const scrapSummonerInfos = async (
 
     await page.waitForNavigation({
         waitUntil: 'domcontentloaded',
+        timeout: 0,
     });
 
     const selectTeamfightParticipation = '#graphDD27';
@@ -149,6 +150,7 @@ export const scrapSummonerInfos = async (
 
     await pageVision.goto(urlVision, {
         waitUntil: 'domcontentloaded',
+        timeout: 0,
     });
 
     const searchVisionField = '.full-progress-bar.wgblue';
