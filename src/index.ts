@@ -59,8 +59,7 @@ export const scrapSummonerInfos = async (
     );
 
     // Set screen size
-    await page.setViewport({ width: 1080, height: 1024 });
-
+    await page.setViewport({ width: 640, height: 480 });
     const searchName = '.txt h2';
 
     const playerNameField = await page.waitForSelector(searchName);
@@ -92,7 +91,7 @@ export const scrapSummonerInfos = async (
         timeout: 0,
     });
 
-    const selectTeamfightParticipation = '#graphDD18';
+    const selectTeamfightParticipation = '#graphDD21';
     const teamfightParticipationField = await page.waitForSelector(
         selectTeamfightParticipation
     );
