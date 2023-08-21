@@ -11,7 +11,7 @@ export const scrapSummonerInfos = async (
     user: string
 ): Promise<SummonerInfos> => {
     const browser = await puppeteer.launch({
-        headless: true,
+        headless: 'new',
         args: [
             '--disable-gpu',
             '--disable-dev-shm-usage',
@@ -25,6 +25,26 @@ export const scrapSummonerInfos = async (
                 : puppeteer.executablePath(),
     });
     const page = await browser.newPage();
+
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        if (
+            [
+                'image',
+                'manifest',
+                'font',
+                'media',
+                'fetch',
+                'prefetch',
+                'websocket',
+                'xhr',
+            ].indexOf(request.resourceType()) !== -1
+        ) {
+            request.abort();
+        } else {
+            request.continue();
+        }
+    });
 
     await page.setUserAgent(
         'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'
@@ -145,6 +165,25 @@ export const scrapSummonerInfos = async (
     const currentUrl = page.url();
 
     const pageVision = await browser.newPage();
+    await pageVision.setRequestInterception(true);
+    pageVision.on('request', (request) => {
+        if (
+            [
+                'image',
+                'manifest',
+                'font',
+                'media',
+                'fetch',
+                'prefetch',
+                'websocket',
+                'xhr',
+            ].indexOf(request.resourceType()) !== -1
+        ) {
+            request.abort();
+        } else {
+            request.continue();
+        }
+    });
 
     const urlVision = `${currentUrl}#visionData`;
 
