@@ -91,7 +91,7 @@ export const scrapSummonerInfos = async (
         timeout: 0,
     });
 
-    const selectTeamfightParticipation = '#graphDD21';
+    const selectTeamfightParticipation = '#graphDD27';
     const teamfightParticipationField = await page.waitForSelector(
         selectTeamfightParticipation
     );
